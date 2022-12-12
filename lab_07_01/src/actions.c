@@ -192,7 +192,7 @@ void exec_time_cmp_del_ununique()
     FILE *f = fopen("dataset.txt", "r");
     arr_ints_t s;
     size_t n = 6;
-    size_t sizes[20] = { 1, 10, 50, 100, 1000, 10000 };
+    size_t sizes[20] = { 1, 10, 50, 100, 1000, 3000 };
     for (size_t i = 0; i < n; i++)
     {
         ints_scan(&s, sizes[i], f);
@@ -213,7 +213,7 @@ void exec_time_cmp_del()
     FILE *f = fopen("dataset.txt", "r");
     arr_ints_t s;
     size_t n = 6;
-    size_t sizes[20] = { 1, 10, 50, 100, 1000, 10000 };
+    size_t sizes[20] = { 1, 10, 50, 100, 1000, 3000 };
     for (size_t i = 0; i < n; i++)
     {
         ints_scan(&s, sizes[i], f);
@@ -235,7 +235,7 @@ void exec_time_cmp_add()
     FILE *f = fopen("dataset.txt", "r");
     arr_ints_t s;
     size_t n = 6;
-    size_t sizes[20] = { 1, 10, 50, 100, 1000, 10000 };
+    size_t sizes[20] = { 1, 10, 50, 100, 1000, 3000 };
     for (size_t i = 0; i < n; i++)
     {
         ints_scan(&s, sizes[i], f);
@@ -257,7 +257,7 @@ void exec_time_cmp_find()
     FILE *f = fopen("dataset.txt", "r");
     arr_ints_t s;
     size_t n = 6;
-    size_t sizes[20] = { 1, 10, 50, 100, 1000, 10000 };
+    size_t sizes[20] = { 1, 10, 50, 100, 1000, 3000 };
     for (size_t i = 0; i < n; i++)
     {
         ints_scan(&s, sizes[i], f);

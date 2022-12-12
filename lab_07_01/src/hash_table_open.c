@@ -36,12 +36,17 @@ int hashtableopen_change_divisor(hash_table_open_t *table, int divisor)
     if (table->data == NULL)
         hashtableopen_init(table, divisor);
 
+    int old_divisor = table->divisor;
+
     table->divisor = divisor;
     list_t *temp = realloc(table->data, sizeof(list_t) * table->divisor);
     if (temp == NULL)
         return EXIT_HASH_TABLE_OPEN_REALLOC_ERROR;
 
     table->data = temp;
+
+    for (int i = old_divisor; i < table->divisor; i++)
+        list_init(&(table->data[i]));
 
     hashtableopen_rebuild(table);
 
@@ -91,9 +96,7 @@ void hashtableopen_from(hash_table_open_t *table, arr_ints_t *s)
     hashtableopen_init(table, s->size);
 
     for (size_t i = 0; i < s->size; i++)
-    {
         hashtableopen_add(table, s->data[i], 1);
-    }
 }
 
 void hashtableopen_print(hash_table_open_t *table)
@@ -148,7 +151,6 @@ unsigned long long hashtableopen_del_ununique_time(arr_ints_t *s)
         hashtableopen_clear(&table);
 
         sum += nanoseconds(&beg, &end);
-        if (s->size == 1000) printf("\n%d\n", i);
     }
 
     return sum / TIME_RUNS;
