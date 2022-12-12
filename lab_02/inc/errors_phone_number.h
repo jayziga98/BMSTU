@@ -1,0 +1,7 @@
+#ifndef __ERRORS_PHONE_NUMBER_H__
+
+#define __ERRORS_PHONE_NUMBER_H__
+
+#define EXIT_INCORRECT_PHONE 30
+
+#endif // #ifndef __ERRORS_PHONE_NUMBER_H__
