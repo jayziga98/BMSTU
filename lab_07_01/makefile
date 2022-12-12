@@ -12,7 +12,7 @@ SRCS = $(wildcard $(SRC)*.c)
 UNIT_SRCS = $(wildcard $(UNIT)*.c)
 
 # Общие объектные файлы
-OBJS := $(OUT)/binary_tree.o $(OUT)/arr_ints.o $(OUT)/actions.o $(OUT)/my_time.o $(OUT)/myrandom.o $(OUT)/scapegoat_tree.o $(OUT)/hash_table_open.o $(OUT)/list.o $(OUT)/prime.o
+OBJS := $(OUT)/binary_tree.o $(OUT)/arr_ints.o $(OUT)/actions.o $(OUT)/my_time.o $(OUT)/myrandom.o $(OUT)/scapegoat_tree.o $(OUT)/hash_table_open.o $(OUT)/hash_table_close.o $(OUT)/list.o $(OUT)/prime.o
 
 # Компилятор
 CC := gcc
