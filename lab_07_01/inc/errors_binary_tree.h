@@ -1,0 +1,7 @@
+#ifndef __ERRORS_BINARY_TREE_H__
+
+#define __ERRORS_BINARY_TREE_H__
+
+#define EXIT_BINARY_TREE_CREATE_NODE_MALLOC_ERROR 10
+
+#endif // #ifndef __ERRORS_BINARY_TREE_H__
