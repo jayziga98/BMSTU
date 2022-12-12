@@ -1,0 +1,11 @@
+#ifndef __ERRORS_STACK_H__
+
+#define __ERRORS_STACK_H__
+
+#define EXIT_ALLOCATING_STACK_ERROR     10
+#define EXIT_STACK_ADD_MEM_ERROR        11
+#define EXIT_EMPTY_STACK_ERROR          12
+#define EXIT_UNINITIALIZED_STACK_ERROR  13
+#define EXIT_STACK_POP_MEM_ERROR        14
+
+#endif // #ifndef __ERRORS_STACK_H__
