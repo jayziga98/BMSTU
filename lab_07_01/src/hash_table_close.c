@@ -14,7 +14,7 @@ int hashtableclose_init(hash_table_close_t *table, int divisor)
         return EXIT_HASH_TABLE_CLOSE_MALLOC_ERROR;
 
     for (int i = 0; i < table->divisor; i++)
-        table->data[i].cnt = 0;
+        table->data[i].data = 0, table->data[i].cnt = 0;
 
     return EXIT_SUCCESS;
 }
@@ -43,7 +43,7 @@ int hashtableclose_change_divisor(hash_table_close_t *table, int divisor)
     table->data = temp;
 
     for (int i = old_divisor; i < table->divisor; i++)
-        table->data[i].cnt = 0;
+        table->data[i].data = 0, table->data[i].cnt = 0;
 
     hashtableclose_rebuild(table);
 
@@ -56,18 +56,24 @@ void hashtableclose_add(hash_table_close_t *table, int num, size_t count)
     if (count == 0)
         count = 1;
     hash_table_close_cell_t elem = { .data = num, .cnt = count };
-    for (int i = hash; ; i++)
-        if (i - hash > HASH_TABLE_CLOSE_COLLISION_CNT || i == table->divisor)
+    int is_inserted = 0;
+    for (int i = hash; i < table->divisor && !is_inserted && i - hash <= HASH_TABLE_CLOSE_COLLISION_CNT; i++)
+        if (table->data[i].cnt > 0 && table->data[i].data == num)
         {
-            hashtableclose_change_divisor(table, prime_next(table->divisor));
-            hashtableclose_add(table, num, count);
-            break;
+            table->data[i].cnt += count;
+            is_inserted = 1;
         }
-        else if (table->data[i].cnt == 0)
+        else if (table->data[i].cnt < 1)
         {
             table->data[i] = elem;
-            break;
+            is_inserted = 1;
         }
+
+    if (!is_inserted)
+    {
+        hashtableclose_change_divisor(table, prime_next(table->divisor * 2));
+        hashtableclose_add(table, num, count);
+    }
 }
 
 hash_table_close_cell_t hashtableclose_del(hash_table_close_t *table, int num)
@@ -120,7 +126,7 @@ void hashtableclose_print(hash_table_close_t *table)
     for (int i = 0; i < table->divisor; i++)
         if (table->data[i].cnt > 0)
         {
-            if (table->data[i].cnt == 1)
+            if (table->data[i].cnt > 1)
                 printf("[%d: "ANSI_COLOR_GREEN"%d(%d)"ANSI_COLOR_RESET"]", i, table->data[i].data, table->data[i].cnt);
             else
                 printf("[%d: %d(%d)]", i, table->data[i].data, table->data[i].cnt);
@@ -138,13 +144,15 @@ void hashtableclose_del_ununique(hash_table_close_t *table)
 void hashtableclose_rebuild(hash_table_close_t *table)
 {
     hash_table_close_t new;
+    new.data = NULL;
     hashtableclose_init(&new, table->divisor);
     for (int i = 0; i < table->divisor; i++)
-        hashtableclose_add(&new, table->data[i].data, table->data[i].cnt);
+        if (table->data[i].cnt > 0)
+            hashtableclose_add(&new, table->data[i].data, table->data[i].cnt);
 
     hashtableclose_clear(table);
 
-    *table = new;
+    table->data = new.data;
 }
 
 unsigned long long hashtableclose_del_ununique_time(arr_ints_t *s)

@@ -1,5 +1,13 @@
 #include "actions.h"
 
+void flush_stdin()
+{
+    int c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
+}
+
 void info_print()
 {
     printf("+____________________________________________________________________________________________+\n");
@@ -96,8 +104,8 @@ int exec_scan_from_string(hash_table_open_t *table_open, hash_table_close_t *tab
     int rc = 0;
 
     arr_ints_t s;
-    fflush(stdin);
     ints_scan(&s, ARR_SIZE, stdin);
+    flush_stdin();
     if ((rc = scapegoat_scan_from(stree, &s)) || (rc = btree_scan_from(btree, &s)))
         return rc;
 
@@ -114,13 +122,12 @@ int exec_add(hash_table_open_t *table_open, hash_table_close_t *table_close, sca
 
     int c;
 
-    fflush(stdin);
     if (scanf("%d", &c) != 1)
     {
         printf("\n\t ! Элемент должен быть числом.\n");
         return 0;
     }
-    fflush(stdin);
+    flush_stdin();
 
     if ((rc = btree_add(&(btree->root), c, NULL)))
         return rc;
@@ -139,13 +146,12 @@ void exec_del(hash_table_open_t *table_open, hash_table_close_t *table_close, sc
 {
     int c;
 
-    fflush(stdin);
     if (scanf("%d", &c) != 1)
     {
         printf("\n\t ! Элемент должен быть числом.\n");
         return;
     }
-    fflush(stdin);
+    flush_stdin();
 
     btree_del(&(btree->root), c);
     scapegoat_del(&(stree->root), c);

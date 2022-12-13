@@ -13,6 +13,7 @@
 
 #define COMMAND_NUMBER_LEN 3
 
+void flush_stdin();
 void info_print();
 int actions_print();
 int actions_handler(int com, hash_table_open_t *table_open, hash_table_close_t *table_close, scapegoat_tree_t *stree, binary_tree_t *btree);

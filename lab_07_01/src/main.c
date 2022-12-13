@@ -10,8 +10,10 @@ int main()
     btree.root = NULL;
     scapegoat_tree_t stree;
     stree.root = NULL;
-    hash_table_open_t table;
-    table.data = NULL;
+    hash_table_open_t table_open;
+    table_open.data = NULL;
+    hash_table_close_t table_close;
+    table_close.data = NULL;
 
     info_print();    
 
@@ -24,12 +26,12 @@ int main()
         int rc = 0;
 
         printf("\n > Выполнить команду №: ");
-        fflush(stdin);
         if (scanf("%d", &com) == 1)
         {
+            flush_stdin();
             printf("\n");
 
-            rc = actions_handler(com, &table, &stree, &btree);
+            rc = actions_handler(com, &table_open, &table_close, &stree, &btree);
 
             if (rc)
                 return EXIT_FAILURE;
@@ -40,7 +42,8 @@ int main()
 
     btree_clear(btree.root);
     scapegoat_clear(stree.root);
-    hashtableopen_clear(&table);
+    hashtableopen_clear(&table_open);
+    hashtableclose_clear(&table_close);
 
     return EXIT_SUCCESS;
 }

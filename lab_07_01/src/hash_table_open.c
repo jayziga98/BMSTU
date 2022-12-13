@@ -123,6 +123,7 @@ void hashtableopen_del_ununique(hash_table_open_t *table)
 void hashtableopen_rebuild(hash_table_open_t *table)
 {
     hash_table_open_t new;
+    new.data = NULL;
     hashtableopen_init(&new, table->divisor);
     for (int i = 0; i < table->divisor; i++)
         for (node_t *cur_node = table->data[i].head; cur_node != NULL; cur_node = cur_node->next)

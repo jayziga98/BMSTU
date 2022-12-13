@@ -44,10 +44,18 @@ $(OUT)/%.o : $(UNIT)/%.c
 
 include $(UNIT_SRCS: .c=.d)
 
-.PHONY : clean check_scripts func unit clang valgrind coverage debug release
+.PHONY : clean check_scripts func unit clang valgrind coverage debug release posix_release
 
 release: CFLAGS += -O2
 release: app.exe
+
+posix_release: CFLAGS += -D_POSIX_C_SOURCE=199309L
+posix_release: CFLAGS += -O2
+posix_release: app.exe
+
+posix_debug: CFLAGS += -D_POSIX_C_SOURCE=199309L
+posix_debug: CFLAGS += -Og -ggdb
+posix_debug: app.exe
 
 debug: CFLAGS += -Og -ggdb
 debug: app.exe
