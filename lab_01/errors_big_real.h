@@ -1,0 +1,9 @@
+#ifndef __ERRORS_BIG_REAL_H__
+
+#define __ERRORS_BIG_REAL_H__
+
+#define EXIT_MANTISSA_OVERFLOW 20
+#define EXIT_EXPONENT_OVERFLOW 21
+#define EXIT_NOT_INPUT_BIG_REAL 22
+
+#endif // #ifndef __ERRORS_BIG_REAL_H__
